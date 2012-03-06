@@ -1,0 +1,6 @@
+name: PhonGates
+main: com.phondeux.phongates.PhonGates
+version: 1.0
+description:
+
+commands:
