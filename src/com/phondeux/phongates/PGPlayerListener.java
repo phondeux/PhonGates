@@ -26,14 +26,14 @@ public class PGPlayerListener implements Listener {
 				  if (block.getRelative(0, -1, 0).getType() == Material.LAPIS_BLOCK ) {
 					  createPortal("goonimati", block);
 				  }
-				  if (block.getRelative(0, -1, 0).getType() == Material.SANDSTONE ) {
-					  createPortal("sand", block);
-				  }
 				  if (block.getRelative(0, -1, 0).getType() == Material.OBSIDIAN ) {
 					  createPortal("nether", block);
 				  }
 				  if (block.getRelative(0, -1, 0).getType() == Material.NETHER_BRICK ) {
 					  createPortal("spawn", block);
+				  }
+				  if (block.getRelative(0, -1, 0).getType() == Material.SAND ) {
+					  createPortal("sandv3", block);
 				  }
 			  }
 		  }
@@ -73,14 +73,14 @@ public class PGPlayerListener implements Listener {
 				  //   tp player to target world
 				  String destWorld = "world_dead";
 				  Location destLoc = event.getPlayer().getLocation();
-				  if (destBlock.getType() == Material.SANDSTONE) {
-					  destWorld = "world_newsand";
+				  if (destBlock.getType() == Material.SAND) {
+					  destWorld = "world_sandv3";
 				  }
 				  if (destBlock.getType() == Material.OBSIDIAN) {
-					  destWorld = "world_dead_nether";
+					  destWorld = "world_newnether";
 				  }
-				  if (destBlock.getWorld().getName().equalsIgnoreCase(destWorld)) {
-					  event.getPlayer().sendMessage("Portal Malfunction");
+				  if (destLoc.getWorld().getName().equalsIgnoreCase(destWorld)) {
+					  event.getPlayer().sendMessage("Portal Malfunction, destination must be another world");
 					  return;
 				  }
 				  block.getLocation().getWorld().strikeLightningEffect(block.getLocation());
@@ -127,9 +127,6 @@ public class PGPlayerListener implements Listener {
 
   public void createPortal(String portalType, Block block) {
 	  Material coreMaterial = Material.AIR;
-	  if (portalType.matches("sand")) {
-		  coreMaterial = Material.SANDSTONE;
-	  }
 	  if (portalType.matches("spawn")) {
 		  coreMaterial = Material.NETHER_BRICK;
 	  }
@@ -138,6 +135,9 @@ public class PGPlayerListener implements Listener {
 	  }
 	  if (portalType.matches("goonimati")) {
 		  coreMaterial = Material.LAPIS_BLOCK;
+	  }
+	  if (portalType.matches("sandv3")) {
+		  coreMaterial = Material.SAND;
 	  }
 	  block.getRelative(0, -2, 0).setType(coreMaterial);
 	  block.getRelative(1, -2, 0).setType(coreMaterial);
